@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(40, 38, 38, 0.385);
+}
+
+/* Header */
+.main-header{
+   padding: 10px;
+   margin-top: 5px;
+   text-align: center;
+}
+
+.nav-link {
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    border-radius: 50px;
+}
+
+.nav-link:hover {
+    background-color: lightgrey;
+}
+
+/* Main */
+
+.tools {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+input {
+    margin: 10px;
+    border-radius: 10px;
+}
+
+/*Canvas*/
+
+canvas {
+    display: block;
+    width: 50vw; /* Volledige breedte van het scherm */
+    height: 100vh; /* Volledige hoogte van het scherm */
+    margin: 0 auto;
+    border: 0.5rem solid rgba(127, 255, 212, 0.5); /* 50% transparantie */
+    background-color: white;
+}
+
