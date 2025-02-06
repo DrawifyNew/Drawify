@@ -1,55 +1,141 @@
-body {
-    font-family: Arial, sans-serif;
+html, body {
     margin: 0;
     padding: 0;
-    background-color: rgba(40, 38, 38, 0.385);
+    top: 0;
+    bottom: 0;
+    background-color: #292a50;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
 }
 
-/* Header */
-.main-header{
-   padding: 10px;
-   margin-top: 5px;
-   text-align: center;
+
+/*navbar*/
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;  /* Breedte van de sidebar */
+    height: 100vh; /* Volledige hoogte van het scherm */
+    background-color: #1c1c3c;
+    padding-top: 2rem;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.nav-link {
+/* Navigatielijst */
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav li {
+    width: 100%;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Navigatielinks */
+nav a {
+    display: block;
     padding: 10px;
     text-decoration: none;
-    color: black;
-    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    transition: background 0.3s ease;
 }
 
-.nav-link:hover {
-    background-color: lightgrey;
+nav a:hover {
+    background-color: #444;
 }
 
-/* Main */
+/*Main*/
 
-.tools {
+.Welcome {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+}
+
+.cubes-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.cube {
+    border: 1px solid;
+    margin: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 100px;
+    height: 75px;
+}
+
+.h1-cube {
+    font-size: 30px;
+    margin-left: 50px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.images {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-top: 45px;
+    margin-left: 275px;
+}
+
+.showcase-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    width: 1000px;
+    height: 750px;
+    margin-top: 45px;
+    margin-left: 275px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    border-width: 2px;
+}
+
+.image-block {
+    width: 200px;
+    height: 200px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin: 5px;
+    margin-top: 10px;
+    margin-left: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-button {
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-}
 
-input {
-    margin: 10px;
-    border-radius: 10px;
+.h3-images {
+    font-size: 20px;
+    margin-left: 50px;
+    display: flex;
+    justify-content: flex-end;
+    color: white;
 }
 
 /*Canvas*/
 
 canvas {
-    display: block;
-    width: 50vw; /* Volledige breedte van het scherm */
-    height: 100vh; /* Volledige hoogte van het scherm */
-    margin: 0 auto;
-    border: 0.5rem solid rgba(127, 255, 212, 0.5); /* 50% transparantie */
-    background-color: white;
+    position: fixed;
+    background-color: #b8b8ca;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 2000px;
+    height: 2000px;
+    z-index: -1; /* Places canvas behind other content */
 }
+
+
+
 

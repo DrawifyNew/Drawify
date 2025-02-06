@@ -3,26 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teken App</title>
+    <title>Drawify</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/script.js"></script>
 </head>
 <body>
-<header class="main-header">
-    <nav class="main-nav">
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">Canva</a>
-            <a href="mijncanvas.html" class="nav-link">Mijn canvas</a>
-        </div>
-    </nav>
+    <div id="navigation" class="navbar">
+        <nav>
+            <ul>
+                <li><a href="Index.html">Home</a></li>
+                <li><a href="drawify.html">Drawify</a></li>
+                <li><a href="drawify.html">New Save</a></li>
+                <li><a href="drawify.html">Open Image</a></li>
+                <li><a href="drawify.html">Settings</a></li>
+                <li><a href="drawify.html">Tablet Settings</a></li>
+                <li><a href="drawify.html">Help</a></li>
+            </ul>
+        </nav>
+    </div>
+<header>
+    <div class="images">
+        <h3 class="h3-images">Recent images</h3>
+    </div>
 </header>
 
- <canvas id="My-canvas" width="800" height="800"></canvas>
-    <div class="tools">
-        <button id="clear">Clear</button>
-        <button id="save">Save</button>
-        <button id="load">Load</button>
-        <input type="color" name="color" id="color">
-        <input type="number" name="size" id="size" min="1" max="100" value="10">
+
+<div class="showcase-images">
+    <div class="image-block" style="display: none;"></div>
+    <div class="image-block" style="display: none;"></div>
+    <div class="image-block" style="display: none;"></div>
+    <div class="image-block" style="display: none;"></div>
+
+    <script>
+        function showImageBlock() {
+            const imageBlocks = document.querySelectorAll('.image-block');
+            imageBlocks.forEach(block => {
+                block.style.display = 'block';
+            });
+        }
+
+        function openNewFile() {
+
+            showImageBlock();
+        }
+
+    </script>
+</div>
+
+
 </body>
 </html>
