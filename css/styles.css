@@ -11,7 +11,7 @@ html, body {
 .bold-text {
     font-weight: bold;
 }
-
+ 
 /*----------------navbar-----------------*/
 
 .navbar {
@@ -61,11 +61,28 @@ nav a:hover {
 
 /*Main*/
 
-.Welcome {
-    text-align: center;
+.welcome-message {
     color: white;
-    font-size: 20px;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    margin-left: 275px;
 }
+
+.welcome-h1 {
+    font-size: 50px;
+    color: white;
+    margin-bottom: 0px; /* Adjust this value to get the desired spacing */
+}
+
+.welcome-p {
+    font-size: 20px;
+    color: white;
+    margin-top: 0; /* Remove any top margin to get closer to the h1 */
+}
+
 
 .cubes-row {
     display: flex;
@@ -99,11 +116,11 @@ nav a:hover {
 }
 
 .showcase-images {
-    display: grid;
+    display: flex;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 10px;
     width: 1000px;
-    height: 750px;
+    height: 600px;
     margin-left: 275px;
     border-style: solid;
     border-color: black;
@@ -170,20 +187,38 @@ canvas {
     left: 50%;
     top: 50%; 
     transform-origin: center center;  /* Ensure scaling occurs from the center */
-    width: 1000px;  /* Set the default canvas size */
-    height: 1000px;  /* Set the default canvas size */ 
-    z-index: -1 ;  /* Places the canvas behind other content */
-    transition: transform 0.1s ease;  /* Smooth transform transition */
+    width: 1000px;  
+    height: 1000px;  
+    z-index: -1 ;  
+    transition: transform 0.1s ease;  
     transform: translate(-50%, -50%); /* Start by centering it */
 }
 
 /*-------------------Tool-Bar---------------------*/
 
-.toolbar{
+/* General styling for the toolbar */
+.toolbar {
+    position: fixed;
+    top: 0; 
+    right: 0;
+    width: 250px;  /* Breedte van de sidebar */
+    height: 100vh; /* Volledige hoogte van het scherm */
+    background-color: #1c1c3c;
+    padding-top: 2rem;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3);
     display: flex;
-    justify-content: right;
-    z-index: 0 ; 
+    flex-direction: column;                          
+    z-index: 10   ;  /* Places the toolbar above the canvas */
 }
+
+.tool-section{
+    color: white;
+    display: flex;
+    flex-direction: column ;
+    align-items: center;
+    margin-top: 1rem;
+}
+
 
 
  

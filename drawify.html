@@ -32,20 +32,56 @@
     </div>
     
     <!--Tool-bar-->  
-    <div id="toolBar" class="toolbar">
-        <button id="pencilButton" class="toolButton">Pencil</button>
-        <button id="eraserButton" class="toolButton">Eraser</button>
-        <button id="lineButton" class="toolButton">Line</button>
-        <button id="rectangleButton" class="toolButton">Rectangle</button>
-        <button id="circleButton" class="toolButton">Circle</button>
-        <button id="triangleButton" class="toolButton">Triangle</button>
+    <div class="toolbar">
+        <div class="tool-section">
+            <h3>Color</h3>
+            <input type="color" id="colorPicker" value="#000000">
+        </div>
+        
+        <div class="tool-section">
+            <h3>Layers</h3>
+            <div class="layer-table">
+                <table>
+                    <tr>
+                        <td><input type="checkbox" checked>Layer 1</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" checked>Layer 2</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
+        <div class="tool-section">
+            <h3>Brushes</h3>
+            <div class="brush-selector" onclick="toggleBrushMenu()" style="width: 30px; height: 30px; border: 2px solid black; cursor: pointer;">
+            </div>
+            <div id="brushMenu" style="display: none;">
+                <select id="brushSelect">
+                    <option value="round">Round</option>
+                    <option value="square">Square</option>
+                    <option value="line">Line</option>
+                    <option value="spray">Spray</option>
+                    <option value="calligraphy">Calligraphy</option>
+                    <option value="marker">Marker</option>
+                </select>
+            </div>
+        </div>
+    </div>
 
     <!--canvas--> 
     <div class="canvas-container">
-        <canvas id="drawingCanvas" width="1000" height="1000"></canvas>
+        <canvas id="drawingCanvas" width="1000" height="1000 "></canvas>
+    </div>
+
+
+    <!--Controls-->
+    <div class="controls">
+        <button id="clearButton">Clear</button>
+        <button id="undoButton">Undo</button>
+        <button id="redoButton">Redo</button>
     </div>
 
     <script src="js/script.js"></script>
-</body>
-</html>
+</body> 
+</html> 

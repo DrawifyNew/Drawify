@@ -7,12 +7,21 @@ let scale = 0.4;
 let canvas = document.querySelector('canvas');
 let ctx = canvas.getContext("2d");
 
-// Zorg ervoor dat het canvas start met de juiste positie
-window.addEventListener('load', () => {
-    updateTransform();
+// Initialize the drawing color
+let drawColor = "#000000";
+
+// Update the drawing color when the color picker value changes
+document.getElementById('colorPicker').addEventListener('input', (e) => {
+    drawColor = e.target.value;
 });
 
-// Spatiebalk indrukken -> pannen activeren
+// Ensure the canvas starts with the correct position
+window.addEventListener('load', () => {
+    updateTransform();
+    loadSavedImage();
+});
+
+// Press spacebar to activate panning
 document.addEventListener('keydown', (e) => {
     if (e.code === 'Space') {
         isSpacePressed = true;
@@ -20,7 +29,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Spatiebalk loslaten -> pannen stoppen
+// Release spacebar to stop panning
 document.addEventListener('keyup', (e) => {
     if (e.code === 'Space') {
         isSpacePressed = false;
@@ -28,23 +37,24 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
-// Muis indrukken: tekenen of pannen
+// Mouse down: draw or pan
 canvas.addEventListener("mousedown", (e) => {
     if (isSpacePressed) {
-        // Begin met slepen
+        // Start dragging
         isDragging = true;
         startX = e.clientX - offsetX;
         startY = e.clientY - offsetY;
         document.body.style.cursor = 'grabbing';
     } else {
-        // Begin met tekenen
+        // Start drawing
         drawing = true;
         ctx.beginPath();
         ctx.moveTo(e.offsetX, e.offsetY);
+        ctx.strokeStyle = drawColor;  // Set the stroke color to the selected color
     }
 });
 
-// Muis bewegen: tekenen of pannen
+// Mouse move: draw or pan
 canvas.addEventListener("mousemove", (e) => {
     if (isDragging) {
         offsetX = e.clientX - startX;
@@ -56,7 +66,7 @@ canvas.addEventListener("mousemove", (e) => {
     }
 });
 
-// Muis loslaten: stoppen met tekenen of slepen
+// Mouse up: stop drawing or dragging
 canvas.addEventListener("mouseup", () => {
     isDragging = false;
     drawing = false;
@@ -65,17 +75,17 @@ canvas.addEventListener("mouseup", () => {
     }
 });
 
-// Muis verlaat canvas: stoppen met tekenen
+// Mouse leave canvas: stop drawing
 canvas.addEventListener("mouseleave", () => {
     drawing = false;
 });
 
-// Update transform voor pannen en zoomen
+// Update transform for panning and zooming
 function updateTransform() {
     canvas.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
 }
 
-// Zoomen met scrollwiel
+// Zoom with scroll wheel
 document.addEventListener('wheel', (e) => {
     e.preventDefault();
     const delta = e.deltaY;
@@ -84,38 +94,14 @@ document.addEventListener('wheel', (e) => {
     updateTransform();
 }, { passive: false });
 
-/*------------------- Drawing --------------------*/
-canvas.addEventListener("mousedown", (e) => {
-    drawing = true;
-    ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
-});
-
-canvas.addEventListener("mousemove", (e) => {
-    if (drawing) {
-        ctx.lineTo(e.offsetX, e.offsetY);
-        ctx.stroke();
-    }
-});
-
-canvas.addEventListener("mouseup", () => {
-    drawing = false;
-});
-
-canvas.addEventListener("mouseleave", () => {
-    drawing = false;
-});
-
-/*------------------- Save Drawing --------------------*/
+// Save drawing
 window.addEventListener('DOMContentLoaded', () => {
     const saveButton = document.getElementById('saveButton');
     const savedImage = document.getElementById('savedImage');
 
-    if (saveButton && savedImage && canvas) {
+    if (saveButton && canvas) {
         saveButton.addEventListener('click', () => {
             const image = canvas.toDataURL('image/png');
-            savedImage.src = image;
-
             fetch('/save-drawing', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -127,6 +113,19 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Load saved image (if any)
+function loadSavedImage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const imageSrc = urlParams.get('image');
+    if (imageSrc) {
+        const img = new Image();
+        img.src = imageSrc;
+        img.onload = () => {
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        };
+    }
+}
 
 /*------------------- Pop-Up --------------------*/
 const modal = document.getElementById('helpModal');
