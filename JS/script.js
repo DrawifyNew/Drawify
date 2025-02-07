@@ -171,3 +171,69 @@ function selectTool(event) {
 toolButtons.forEach(button => {
     button.addEventListener('click', selectTool);
 });
+
+
+// Recent color js
+
+let recentColors = [];
+
+// Load recent colors from local storage
+function loadRecentColors() {
+    const storedColors = localStorage.getItem('recentColors');
+    if (storedColors) {
+        recentColors = JSON.parse(storedColors);
+        renderRecentColors();
+    }
+}
+
+// Save recent colors to local storage
+function saveRecentColors() {
+    localStorage.setItem('recentColors', JSON.stringify(recentColors));
+}
+
+// Add recent color to the list
+function addRecentColor(color) {
+    if (!recentColors.includes(color)) {
+        recentColors.push(color);
+        if (recentColors.length > 5) {
+            recentColors.shift();
+        }
+        saveRecentColors();
+        renderRecentColors();
+    }
+}
+
+// Render recent colors
+function renderRecentColors() {
+    const colorList = document.getElementById('colorList');
+    colorList.innerHTML = '';
+    recentColors.forEach(color => {
+        const colorButton = document.createElement('button');
+        colorButton.className = 'color-block';
+        colorButton.style.backgroundColor = color;
+        colorButton.addEventListener('click', () => {
+            drawColor = color;
+            document.getElementById('colorPicker').value = color;
+        });
+        colorList.appendChild(colorButton);
+    });
+}
+
+// Load recent colors when the page loads
+window.addEventListener('load', () => {
+    loadRecentColors();
+});
+
+// Add event listener to recent colors
+document.getElementById('colorList').addEventListener('click', (e) => {
+    if (e.target.classList.contains('color-block')) {
+        drawColor = e.target.style.backgroundColor;
+        document.getElementById('colorPicker').value = drawColor;
+    }
+});
+
+// Update the drawing color when the color picker value changes
+document.getElementById('colorPicker').addEventListener('change', (e) => {
+    drawColor = e.target.value;
+    addRecentColor(drawColor);
+});
