@@ -1,132 +1,161 @@
 let isDragging = false;
+let isSpacePressed = false;
+let drawing = false;
 let startX, startY;
 let offsetX = -500, offsetY = -500;
 let scale = 0.4;
 let canvas = document.querySelector('canvas');
+let ctx = canvas.getContext("2d");
 
-// Ensure the canvas starts centered by setting the initial position
+// Zorg ervoor dat het canvas start met de juiste positie
 window.addEventListener('load', () => {
-    updateTransform(); // Apply the initial transform
+    updateTransform();
 });
 
-// Event listener for spacebar press to start dragging
+// Spatiebalk indrukken -> pannen activeren
 document.addEventListener('keydown', (e) => {
     if (e.code === 'Space') {
+        isSpacePressed = true;
         document.body.style.cursor = 'grab';
-        
-        document.addEventListener('mousedown', startDragging);
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('mouseup', stopDragging);
     }
 });
 
-// Event listener for spacebar release to stop dragging
+// Spatiebalk loslaten -> pannen stoppen
 document.addEventListener('keyup', (e) => {
     if (e.code === 'Space') {
+        isSpacePressed = false;
         document.body.style.cursor = 'default';
-        
-        document.removeEventListener('mousedown', startDragging);
-        document.removeEventListener('mousemove', drag);
-        document.removeEventListener('mouseup', stopDragging);
     }
 });
 
-// Event listener for zooming with the mouse wheel
+// Muis indrukken: tekenen of pannen
+canvas.addEventListener("mousedown", (e) => {
+    if (isSpacePressed) {
+        // Begin met slepen
+        isDragging = true;
+        startX = e.clientX - offsetX;
+        startY = e.clientY - offsetY;
+        document.body.style.cursor = 'grabbing';
+    } else {
+        // Begin met tekenen
+        drawing = true;
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+    }
+});
+
+// Muis bewegen: tekenen of pannen
+canvas.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+        offsetX = e.clientX - startX;
+        offsetY = e.clientY - startY;
+        updateTransform();
+    } else if (drawing) {
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+    }
+});
+
+// Muis loslaten: stoppen met tekenen of slepen
+canvas.addEventListener("mouseup", () => {
+    isDragging = false;
+    drawing = false;
+    if (isSpacePressed) {
+        document.body.style.cursor = 'grab';
+    }
+});
+
+// Muis verlaat canvas: stoppen met tekenen
+canvas.addEventListener("mouseleave", () => {
+    drawing = false;
+});
+
+// Update transform voor pannen en zoomen
+function updateTransform() {
+    canvas.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+}
+
+// Zoomen met scrollwiel
 document.addEventListener('wheel', (e) => {
     e.preventDefault();
     const delta = e.deltaY;
-    
-    // Adjust zoom sensitivity here
     scale *= delta > 0 ? 0.9 : 1.1;
-    
-    // Limit minimum and maximum zoom
     scale = Math.min(Math.max(0.1, scale), 10);
     updateTransform();
 }, { passive: false });
 
-// Start dragging function
-function startDragging(e) {
-    isDragging = true;
-    startX = e.clientX - offsetX;
-    startY = e.clientY - offsetY;
-    document.body.style.cursor = 'grabbing';
-}
+/*------------------- Drawing --------------------*/
+canvas.addEventListener("mousedown", (e) => {
+    drawing = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+});
 
-// Drag function
-function drag(e) {
-    if (!isDragging) return;
-    
-    offsetX = e.clientX - startX;
-    offsetY = e.clientY - startY;
-    updateTransform();
-}
+canvas.addEventListener("mousemove", (e) => {
+    if (drawing) {
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+    }
+});
 
-// Update the transform properties of the canvas
-function updateTransform() {
-    canvas.style.transform = 
-        `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
-}
+canvas.addEventListener("mouseup", () => {
+    drawing = false;
+});
 
-// Stop dragging function
-function stopDragging() {
-    isDragging = false;
-    document.body.style.cursor = 'grab';
-}
+canvas.addEventListener("mouseleave", () => {
+    drawing = false;
+});
 
+/*------------------- Save Drawing --------------------*/
+window.addEventListener('DOMContentLoaded', () => {
+    const saveButton = document.getElementById('saveButton');
+    const savedImage = document.getElementById('savedImage');
 
+    if (saveButton && savedImage && canvas) {
+        saveButton.addEventListener('click', () => {
+            const image = canvas.toDataURL('image/png');
+            savedImage.src = image;
 
+            fetch('/save-drawing', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image }),
+            })
+            .then(response => response.json())
+            .then(data => console.log('Image successfully saved:', data))
+            .catch(error => console.error('Error:', error));
+        });
+    }
+});
 
-
-
-
-
-
-
-
-
-
-
-/*-------------------Pop-Up--------------------*/
-
-// Get the modal and the help link
+/*------------------- Pop-Up --------------------*/
 const modal = document.getElementById('helpModal');
 const helpLink = document.getElementById('helpLink');
 const closeBtn = document.getElementById('closeBtn');
 
-// Open the modal when the Help link is clicked
-helpLink.addEventListener('click', function(event) {
-    event.preventDefault();  // Prevent the link from navigating
-    modal.style.display = 'block';  // Show the modal
+helpLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    modal.style.display = 'block';
 });
 
-// Close the modal when the close button is clicked
-closeBtn.addEventListener('click', function() {
-    modal.style.display = 'none';  // Hide the modal
+closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
 });
 
-// Close the modal if the user clicks outside of the modal content
-window.addEventListener('click', function(event) {
+window.addEventListener('click', (event) => {
     if (event.target === modal) {
-        modal.style.display = 'none';  // Hide the modal
+        modal.style.display = 'none';
     }
 });
 
-
-/*-------------------tool-bar--------------------*/
-
-// Get all tool buttons
+/*------------------- Tool Bar --------------------*/
 const toolButtons = document.querySelectorAll('.tool-btn');
 const canvasContainer = document.querySelector('.canvas-container');
 
-// Function to handle tool selection
 function selectTool(event) {
-    // Remove active class from all buttons
     toolButtons.forEach(btn => btn.classList.remove('active'));
-    
-    // Add active class to clicked button
     event.target.classList.add('active');
-    
-    // Update cursor based on selected tool
+
     switch(event.target.id) {
         case 'select-tool':
             canvasContainer.style.cursor = 'default';
@@ -140,7 +169,6 @@ function selectTool(event) {
     }
 }
 
-// Add click event listener to each tool button
 toolButtons.forEach(button => {
     button.addEventListener('click', selectTool);
 });

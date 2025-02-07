@@ -11,12 +11,14 @@
         <nav>
             <ul>
                 <li><a href="Index.html">Home</a></li>
-                <li><a href="drawify.html">Save current File</a></li>
+                <li><a id="saveButton" href="drawify.html">Save current File</a></li>
                 <li><a href="javascript:void(0)" id="helpLink">Help</a></li>
             </ul>
         </nav>
     </div>
 
+
+    <!-- Pop-up-Help --> 
     <div id="helpModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" id="closeBtn">&times;</span>
@@ -29,16 +31,18 @@
         </div>
     </div>
     
+    <!--Tool-bar-->  
+    <div id="toolBar" class="toolbar">
+        <button id="pencilButton" class="toolButton">Pencil</button>
+        <button id="eraserButton" class="toolButton">Eraser</button>
+        <button id="lineButton" class="toolButton">Line</button>
+        <button id="rectangleButton" class="toolButton">Rectangle</button>
+        <button id="circleButton" class="toolButton">Circle</button>
+        <button id="triangleButton" class="toolButton">Triangle</button>
 
-    <div class="tool-bar">
-        <div class="tool-section">
-            <label for="colorPicker">Color:</label>
-            <input type="color" id="colorPicker">
-        </div>
-        <div class="tool-section">
-            <div class="layers"></div>
 
-    <div class="canvas-conainer">
+    <!--canvas--> 
+    <div class="canvas-container">
         <canvas id="drawingCanvas" width="1000" height="1000"></canvas>
     </div>
 

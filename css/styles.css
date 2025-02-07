@@ -4,7 +4,7 @@ html, body {
     top: 0;
     bottom: 0;
     background-color: #1a1b33;
-    font-family: Arial, sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     overflow: hidden;
 }
 
@@ -12,12 +12,9 @@ html, body {
     font-weight: bold;
 }
 
-/*---------------------------------------*/
-
-/*navbar*/
+/*----------------navbar-----------------*/
 
 .navbar {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     position: fixed;
     top: 0;
     left: 0;
@@ -26,6 +23,7 @@ html, body {
     background-color: #1c1c3c;
     padding-top: 2rem;
     box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 10 ;
 }
 
 /* Navigatielijst */
@@ -135,15 +133,6 @@ nav a:hover {
     color: white;
 }
 
-.recent-updates {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
-    margin-top: 45px;
-    margin-left: 1100px;	
-}
-
-
 /*settings*/
 
 .settings {
@@ -163,23 +152,41 @@ nav a:hover {
 
 /*-------------------Canvas---------------------*/
 
+.canvas-container {
+    position: fixed;
+    top: 0;
+    left: 200px; /* Houd ruimte vrij voor de navbar */
+    width: calc(100vw - 400px); /* Houd ruimte vrij voor navbar en toolbar */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0; /* Zorgt ervoor dat het onder navbar en toolbar blijft */
+}
+
 canvas {
     position: fixed;  /* Make the canvas position fixed */
     background-color: #b8b8ca;
     left: 50%;
-    top: 50%;
+    top: 50%; 
     transform-origin: center center;  /* Ensure scaling occurs from the center */
     width: 1000px;  /* Set the default canvas size */
-    height: 1000px;  /* Set the default canvas size */
-    z-index: -1;  /* Places the canvas behind other content */
+    height: 1000px;  /* Set the default canvas size */ 
+    z-index: -1 ;  /* Places the canvas behind other content */
     transition: transform 0.1s ease;  /* Smooth transform transition */
     transform: translate(-50%, -50%); /* Start by centering it */
 }
 
+/*-------------------Tool-Bar---------------------*/
+
+.toolbar{
+    display: flex;
+    justify-content: right;
+    z-index: 0 ; 
+}
 
 
-
-
+ 
 
 
 
