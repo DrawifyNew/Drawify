@@ -161,9 +161,7 @@ nav a:hover {
     margin-top: 25px;
 }
 
-/*------------------------------------------*/
-
-/*Canvas*/
+/*-------------------Canvas---------------------*/
 
 canvas {
     position: fixed;  /* Make the canvas position fixed */
@@ -190,7 +188,7 @@ canvas {
 
 
 
-/*Pop-Up*/
+/*-------------------pop-up---------------------*/
 
 .modal {
     display: none;  /* Hidden by default */

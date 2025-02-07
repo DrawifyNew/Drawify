@@ -86,7 +86,7 @@ function stopDragging() {
 
 
 
-/*------------------------------------------------------*/
+/*-------------------Pop-Up--------------------*/
 
 // Get the modal and the help link
 const modal = document.getElementById('helpModal');
@@ -111,3 +111,36 @@ window.addEventListener('click', function(event) {
     }
 });
 
+
+/*-------------------tool-bar--------------------*/
+
+// Get all tool buttons
+const toolButtons = document.querySelectorAll('.tool-btn');
+const canvasContainer = document.querySelector('.canvas-container');
+
+// Function to handle tool selection
+function selectTool(event) {
+    // Remove active class from all buttons
+    toolButtons.forEach(btn => btn.classList.remove('active'));
+    
+    // Add active class to clicked button
+    event.target.classList.add('active');
+    
+    // Update cursor based on selected tool
+    switch(event.target.id) {
+        case 'select-tool':
+            canvasContainer.style.cursor = 'default';
+            break;
+        case 'pan-tool':
+            canvasContainer.style.cursor = 'grab';
+            break;
+        case 'zoom-tool':
+            canvasContainer.style.cursor = 'zoom-in';
+            break;
+    }
+}
+
+// Add click event listener to each tool button
+toolButtons.forEach(button => {
+    button.addEventListener('click', selectTool);
+});
