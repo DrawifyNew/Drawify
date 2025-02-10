@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawify</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <main class="welcome-container"></main>
+        <section class="welcome-hero">
+            <h1 class="welcome-title">Welcome to Drawify!</h1>
+            <p class="welcome-subtitle">The next generation drawing technology</p>
+        </section>
+
+        <div class="brush-container"></div>
+
+        <section class="cta-section">
+            <div class="welcome-button">
+                <a href="index.html" class="cta-button primary">Get started</a>
+            </div>
+            
+            <div class="welcome-info">
+                <h2>Ready to unleash your creativity?</h2>
+                <p>Jump right in and start creating amazing artwork!</p>
+            </div>
+
+            <div class="welcome-button">
+                <a href="drawify.html" class="cta-button secondary">Start Drawing Now</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.body;
+            let lastX, lastY;
+    
+            // Create a container for brush elements
+            const brushContainer = document.createElement('div');
+            brushContainer.classList.add('brush-container');
+            body.appendChild(brushContainer);
+    
+            body.addEventListener('mousemove', (event) => {
+                if (lastX !== undefined && lastY !== undefined) {
+                    const distance = Math.hypot(event.pageX - lastX, event.pageY - lastY);
+                    const steps = Math.ceil(distance / 5);
+    
+                    for (let i = 0; i < steps; i++) {
+                        const brush = document.createElement('div');
+                        brush.style.position = 'absolute';
+                        brush.style.width = '10px';
+                        brush.style.height = '10px';
+                        brush.style.backgroundColor = 'red';
+                        brush.style.borderRadius = '50%';
+                        brush.style.pointerEvents = 'none';
+                        brush.style.transition = 'opacity 0.5s, transform 0.5s';
+                        brush.style.left = `${lastX + (event.pageX - lastX) * (i / steps)}px`;
+                        brush.style.top = `${lastY + (event.pageY - lastY) * (i / steps)}px`;
+    
+                        // Append the brush to the container
+                        brushContainer.appendChild(brush);
+    
+                        // Fade out and remove
+                        setTimeout(() => {
+                            brush.remove();
+                        }, 500);
+                    }
+                }
+                lastX = event.pageX;
+                lastY = event.pageY;
+            });
+        });
+    </script>    
+</body>
+</html>
+
+

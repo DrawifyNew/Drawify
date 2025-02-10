@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 html, body {
     margin: 0;
     padding: 0;
@@ -6,6 +8,7 @@ html, body {
     background-color: #1a1b33;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     overflow: hidden;
+    color: white;
 }
 
 .bold-text {
@@ -44,7 +47,7 @@ nav a {
     padding: 10px;
     text-decoration: none;
     font-weight: bold;
-    color: white;
+    color: thistle;
     font-size: 1.2rem;
     transition: background-color 0.3s ease, border-radius 0.3s ease, transform 0.3s ease;
 }
@@ -56,8 +59,87 @@ nav a:hover {
     transform: scale(1.1); /* You can adjust this to your preference */
 }
 
+/*Welcome Screen*/
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1a1b33;
+    max-width: 100%;
+    max-height: 100%;
+}
 
+.welcome-hero {
+    text-align: center;
+    margin-bottom: 3rem;
+}
 
+.welcome-title {
+    font-size: 3.5rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.welcome-subtitle {
+    font-size: 1.5rem;
+    color: #b8b8ca;
+}
+
+.cta-section {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.welcome-info {
+    margin: 2rem 0;
+    color: #fff;
+    margin-top: 250px;
+}
+
+.welcome-info h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.welcome-info p {
+    color: #b8b8ca;
+    font-size: 1.2rem;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #4138bb;
+    color: white;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin: 1rem;
+}
+
+.cta-button:hover {
+    background-color: #322d8a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.brush-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Pushes brush effects to the background */
+    pointer-events: none; /* Prevents interference with button clicks */
+}
+
+.welcome-hero, .cta-section, .welcome-info {
+    position: relative; /* Ensures content stays above the brush effect */
+    z-index: 2; /* Keeps content on top */
+}
 
 /*Main*/
 
@@ -195,50 +277,73 @@ canvas {
 }
 
 
-.recent-colors {
-    margin-top: 10px;
-    margin-left: 275px;
+/*-------------------Colors-------------------*/
+.color-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    
+}
+
+.recent-colors{
+    display: flex;
+    justify-content: center;
+    pad: 1rem;
+
 }
 
 .color-list {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 2rem;
 }
 
 .color-block {
-    width: 30px;
-    height: 30px;
-    margin: 5px;
+    width: 2rem;  /* Pas de grootte aan naar wens */
+    height: 2rem; /* Pas de grootte aan naar wens */
+    border-radius: 0.3rem;
     cursor: pointer;
-    border: 1px solid #000;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    border: 2px solid #000;
+    transition: transform 0.2s ease-in-out;
+}
+
+.color-block:hover {
+    transform: scale(1.1);
 }
 
 /*-------------------Tool-Bar---------------------*/
 
-/* General styling for the toolbar */
 .toolbar {
     position: fixed;
-    top: 0; 
-    right: 0;
-    width: 250px;  /* Breedte van de sidebar */
-    height: 100vh; /* Volledige hoogte van het scherm */
-    background-color: #1c1c3c;
-    padding-top: 2rem;
-    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3);
     display: flex;
-    flex-direction: column;                          
-    z-index: 10   ;  /* Places the toolbar above the canvas */
+    flex-direction: column;
+    justify-content: top;  /* centers children vertically */
+    align-items: center;      /* centers children horizontally */
+    gap: 1rem;
+    top: 0;
+    right: 0;
+    width: 270px;
+    height: 100vh;
+    background-color: #1c1c3c;
+    padding-top: 1rem;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 10;
 }
 
-.tool-section{
+.tool-section {
     color: white;
     display: flex;
-    flex-direction: column ;
+    flex-direction: column;
     align-items: center;
-    margin-top: 1rem;
+    width: 100%;
+    text-align: center;
 }
 
+/* Stijl voor buttons */
 .brush-buttons {
     display: flex;
     justify-content: space-around;
@@ -251,7 +356,7 @@ canvas {
     margin: 0 10px;
 }
 
-.brush-btn{
+.brush-btn {
     background-color: #17143f;
     color: white;
 }
