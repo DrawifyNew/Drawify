@@ -219,7 +219,7 @@ function renderRecentColors() {
     });
 }
 
-// Load recent colors when the page loads
+// Load recent colors when the page loads 
 window.addEventListener('load', () => {
     loadRecentColors();
 });

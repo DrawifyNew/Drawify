@@ -273,7 +273,7 @@ canvas {
     height: 1000px;  
     z-index: -1 ;  
     transition: transform 0.1s ease;  
-    transform: translate(-50%, -50%); /* Start by centering it */
+    transform: translate(-50%, -50%); /* Start by centering it */ 
 }
 
 
@@ -362,6 +362,26 @@ canvas {
 }
 
 
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    gap: 1rem;
+    bottom: 0; 
+    width: calc(100%); /* Accounts for navbar and toolbar */
+    padding: 0.3rem;
+    background-color: #1c1c3c;
+    box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.control-button{
+    border-radius: 0.4rem;
+    background-color: rgb(50, 44, 116);
+    color: rgb(255, 255, 255);
+}
+
 
 
 
@@ -414,8 +434,4 @@ canvas {
     text-decoration: none;
     cursor: pointer;
 }
-
-
-
-
 
